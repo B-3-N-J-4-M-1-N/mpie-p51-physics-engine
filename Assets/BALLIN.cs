@@ -6,14 +6,14 @@ public class BALLIN : MonoBehaviour
     public bool thrown = false;
     public float zMagnitude;
     public float xMovement;
-    public float yRotation;
+    public float xMagnitude;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         zMagnitude = 500.0f;
         xMovement = 0.125f;
-        yRotation = 5.0f;
+        xMagnitude = 0.0f;
     }
 
     // Update is called once per frame
@@ -62,12 +62,21 @@ public class BALLIN : MonoBehaviour
             // Curve ball left with Q
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                t.Rotate(0.0f, -yRotation * Time.deltaTime, 0.0f);
+                xMagnitude += 5.0f;
+                if (xMagnitude > 50.0f) 
+                {
+                    xMagnitude = 50.0f;
+                }
+
             }
             // Curve ball right with E
             if (Input.GetKeyDown(KeyCode.E))
             {
-                t.Rotate(0.0f, yRotation * Time.deltaTime, 0.0f);
+                xMagnitude -= 5.0f;
+                if (xMagnitude < -50.0f) 
+                {
+                    xMagnitude = -50.0f;
+                }
             }
 
             // Throw ball with spacebar
@@ -75,7 +84,7 @@ public class BALLIN : MonoBehaviour
             {
                 thrown = true;
                 Rigidbody rb = GetComponent<Rigidbody> ();
-                rb.AddForce(new Vector3(0.0f, 0.0f, -zMagnitude));
+                rb.AddForce(new Vector3(xMagnitude, 0.0f, -zMagnitude));
             }
         }
     }
