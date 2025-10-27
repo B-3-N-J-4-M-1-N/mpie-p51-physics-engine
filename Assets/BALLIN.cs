@@ -3,13 +3,17 @@ using UnityEngine;
 public class BALLIN : MonoBehaviour
 {
 
-    public float zMagnitude;
     public bool thrown = false;
+    public float zMagnitude;
+    public float xMovement;
+    public float yRotation;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         zMagnitude = 500.0f;
+        xMovement = 0.125f;
+        yRotation = 5.0f;
     }
 
     // Update is called once per frame
@@ -36,26 +40,34 @@ public class BALLIN : MonoBehaviour
                 }
             }
 
+            Transform t = gameObject.transform;
+
             // Move ball left with A
             if (Input.GetKeyDown(KeyCode.A))
             {
-                //...
+                if (transform.position.x + xMovement <= 0.5)
+                {
+                    t.Translate(xMovement, 0.0f, 0.0f);
+                }
             }
             // Move ball right with D
             if (Input.GetKeyDown(KeyCode.D))
             {
-                //...
+                if (transform.position.x - xMovement >= -0.5)
+                {
+                    t.Translate(-xMovement, 0.0f, 0.0f);
+                }
             }
 
             // Curve ball left with Q
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                //...
+                t.Rotate(0.0f, -yRotation * Time.deltaTime, 0.0f);
             }
             // Curve ball right with E
             if (Input.GetKeyDown(KeyCode.E))
             {
-                //...
+                t.Rotate(0.0f, yRotation * Time.deltaTime, 0.0f);
             }
 
             // Throw ball with spacebar
